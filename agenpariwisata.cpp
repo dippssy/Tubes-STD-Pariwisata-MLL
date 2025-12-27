@@ -1,4 +1,74 @@
 #include "agenpariwisata.h"
+void createListAgen(ListAgen &L){ 
+    L.first = nullptr; 
+}
+
+void createListLokasi(ListLokasi &L){
+    L.first = nullptr; 
+}
+
+void createListRelasi(ListRelasi &L){ 
+    L.first = nullptr; 
+}
+
+adrAgen createAgen(string id, string nama, string alamat){
+    adrAgen P = new Agen;
+    P->idAgen = id;
+    P->namaAgen = nama;
+    P->alamat = alamat;
+    P->next = nullptr;
+    return P;
+}
+
+adrLokasi createLokasi(string id, string nama, string daerah){
+    adrLokasi P = new Lokasi;
+    P->idLokasi = id;
+    P->namaLokasi = nama;
+    P->daerah = daerah;
+    P->next = nullptr;
+    return P;
+}
+
+adrRelasi createRelasi(adrAgen A, adrLokasi B){
+    adrRelasi R = new Relasi;
+    R->agen = A;
+    R->lokasi = B;
+    R->next = nullptr;
+    return R;
+}
+
+void insertFirstAgen(ListAgen &L, adrAgen P){
+    P->next = L.first;
+    L.first = P;
+}
+
+void insertLastAgen(ListAgen &L, adrAgen P){
+    if(L.first == nullptr){ L.first = P; }
+    else{
+        adrAgen Q = L.first;
+        while(Q->next != nullptr) Q = Q->next;
+        Q->next = P;
+    }
+}
+
+void insertFirstLokasi(ListLokasi &L, adrLokasi P){
+    P->next = L.first;
+    L.first = P;
+}
+
+void insertLastLokasi(ListLokasi &L, adrLokasi P){
+    if(L.first == nullptr){ L.first = P; }
+    else{
+        adrLokasi Q = L.first;
+        while(Q->next != nullptr) Q = Q->next;
+        Q->next = P;
+    }
+}
+
+void insertFirstRelasi(ListRelasi &L, adrRelasi R){
+    R->next = L.first;
+    L.first = R;
+}
 
 adrAgen searchAgen(ListAgen L, string id){
     adrAgen P = L.first;

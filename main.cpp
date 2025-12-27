@@ -75,6 +75,78 @@ int main(){
             } else cout << "Agen/Lokasi tidak ditemukan!" << endl;
         }
 
+        else if(pilih == 4){
+            cout << "===== DAFTAR AGEN =====" << endl;
+            showAllAgen(LA);
+        }
+        else if(pilih == 5){
+            cout << "===== DAFTAR LOKASI =====" << endl;
+            showAllLokasi(LL);
+        }
+        else if(pilih == 6){
+            cout << "===== DAFTAR RELASI =====" << endl;
+            showAllRelasi(LR);
+        }
+        else if(pilih == 7){
+            string id;
+            cout << "Masukkan ID Agen: "; cin >> id;
+            adrAgen A = searchAgen(LA, id);
+            if(A != NULL){
+                cout << "Lokasi yang ditangani agen " << A->namaAgen << ":" << endl;
+                tampilkanLokasiDariAgen(LR, A);
+            } else cout << "Agen tidak ditemukan!" << endl;
+        }
+        else if(pilih == 8){
+            string id;
+            cout << "Masukkan ID Lokasi: "; cin >> id;
+            adrLokasi L = searchLokasi(LL, id);
+            if(L != NULL){
+                cout << "Agen yang menangani lokasi " << L->namaLokasi << ":" << endl;
+                tampilkanAgenDariLokasi(LR, L);
+            } else cout << "Lokasi tidak ditemukan!" << endl;
+        }
+        else if(pilih == 9){
+            string id;
+            cout << "ID Agen yang akan dihapus: "; cin >> id;
+            deleteAgen(LA, LR, id);
+            cout << "Agen berhasil dihapus (beserta relasinya)." << endl;
+        }
+        else if(pilih == 10){
+            string id;
+            cout << "ID Lokasi yang akan dihapus: "; cin >> id;
+            deleteLokasi(LL, LR, id);
+            cout << "Lokasi berhasil dihapus (beserta relasinya)." << endl;
+        }
+        else if(pilih == 11){
+            if(LL.first == NULL){
+                cout << "Belum ada lokasi!" << endl;
+            } else {
+                adrLokasi P = LL.first;
+                adrLokasi maxLoc = LL.first;
+                adrLokasi minLoc = LL.first;
+                int maxCount = -1;
+                int minCount = 999999;
+
+                while(P != NULL){
+                    int count = 0;
+                    adrRelasi R = LR.first;
+                    while(R != NULL){
+                        if(R->lokasi == P) count++;
+                        R = R->next;
+                    }
+                    if(count > maxCount){ maxCount = count; maxLoc = P; }
+                    if(count < minCount){ minCount = count; minLoc = P; }
+                    P = P->next;
+                }
+
+                cout << "\n=== LOKASI TERPOPULER ===" << endl;
+                cout << maxLoc->namaLokasi << " (" << maxCount << " agen)" << endl;
+
+                cout << "\n=== LOKASI PALING SEPI ===" << endl;
+                cout << minLoc->namaLokasi << " (" << minCount << " agen)" << endl;
+            }
+        }
+
     } while(pilih != 0);
 
     cout << "Program selesai." << endl;
